@@ -60,7 +60,7 @@
 
     <script>
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSx8AyRPXBOoij8AoASxdVLcV3I5i_ctEQGmTJ5s2nznqL23OItItdF4uNuemjJoN6Z3fpwkmHuE-iM/pub?output=csv";
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLuUL2oPyhxC6ASOU2_sG3_ryx9cMF7yg1tk_Ok3-DVMah31w-0eNalOTeJ_Ig3Wc/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby28JrAyaMwk10emAB5hvjFu-3Ud0qdcCnHJS1wTPl-wyrwx2g6gkxyqiO-vkvaNThl/exec";
 
         async function loadLists() {
             const res = await fetch(SHEET_URL);
@@ -97,10 +97,14 @@
                         button.addEventListener("click", async () => {
                             button.disabled = true;
                             button.textContent = "Purchased";
+                            // await fetch(SCRIPT_URL, {
+                            //     method: "POST",
+                            //     headers: { "Content-Type": "application/json" },
+                            //     body: JSON.stringify({ person, item }),
+                            // });
                             await fetch(SCRIPT_URL, {
                                 method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ person, item }),
+                                body: JSON.stringify({ person, item }), // no extra headers
                             });
                         });
                     }
