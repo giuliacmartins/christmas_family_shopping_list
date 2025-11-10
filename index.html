@@ -69,22 +69,25 @@
             const header = rows.shift();
             const lists = {};
 
+            // Build lists object
             rows.forEach(([person, item, link, purchased]) => {
                 if (!lists[person]) lists[person] = [];
-                // MINIMAL FIX: normalize TRUE values
-                const isPurchased = String(purchased).trim().toUpperCase() === "TRUE";
-                lists[person].push({ item, link, purchased: isPurchased });
+                const isPurchased = String(purchased).trim().toLowerCase() === "true";
+                const itemObj = { item, link, purchased: isPurchased };
+                lists[person].push(itemObj);
             });
 
             const container = document.getElementById("lists");
             container.innerHTML = "";
 
+            // Render lists
             for (const [person, items] of Object.entries(lists)) {
                 const section = document.createElement("div");
                 section.classList.add("person");
                 section.innerHTML = `<h2>${person}</h2>`;
 
-                items.forEach(({ item, link, purchased }) => {
+                items.forEach(itemObj => {
+                    const { item, link, purchased } = itemObj;
                     const div = document.createElement("div");
                     div.classList.add("item");
                     div.innerHTML = `
@@ -97,14 +100,10 @@
                         button.addEventListener("click", async () => {
                             button.disabled = true;
                             button.textContent = "Purchased";
-                            // await fetch(SCRIPT_URL, {
-                            //     method: "POST",
-                            //     headers: { "Content-Type": "application/json" },
-                            //     body: JSON.stringify({ person, item }),
-                            // });
+                            itemObj.purchased = true; // live update locally
                             await fetch(SCRIPT_URL, {
                                 method: "POST",
-                                body: JSON.stringify({ person, item }), // no extra headers
+                                body: JSON.stringify({ person, item }),
                             });
                         });
                     }
