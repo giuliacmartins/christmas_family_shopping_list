@@ -1,121 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎄 Family Christmas Lists 🎄</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f8f4ef;
-            color: #333;
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-        }
-        h1 {
-            text-align: center;
-            color: #b22222;
-        }
-        h2 {
-            border-bottom: 2px solid #b22222;
-            padding-bottom: 5px;
-            color: #b22222;
-        }
-        .person {
-            margin-bottom: 2rem;
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .item:last-child {
-            border-bottom: none;
-        }
-        button {
-            background-color: #b22222;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        button:disabled {
-            background-color: gray;
-            cursor: not-allowed;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎄 Family Christmas Lists 🎄</title>
+<style>
+    /* Background & Fonts */
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to bottom, #ccefff, #ffffff), url('https://images.unsplash.com/photo-1516542076529-1ea3854896f4?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+        background-size: cover;
+        color: #333;
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Main Title */
+    h1 {
+        text-align: center;
+        color: #b22222;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 5px #fff;
+    }
+
+    /* Subtitle Paragraph */
+    p.subtitle {
+        text-align: center;
+        font-size: 1.1em;
+        margin-top: -10px;
+        margin-bottom: 30px;
+        color: #006400;
+        font-weight: bold;
+    }
+
+    /* Person Section */
+    .person {
+        margin-bottom: 2rem;
+        background: rgba(255,255,255,0.9);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        border: 2px solid #b22222;
+    }
+
+    /* Person Name Header */
+    .person h2 {
+        border-bottom: 3px solid #b22222;
+        padding-bottom: 8px;
+        color: #b22222;
+        font-size: 1.5em;
+    }
+
+    /* Item Rows */
+    .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 1em;
+    }
+
+    .item:last-child {
+        border-bottom: none;
+    }
+
+    .item a {
+        color: #006400;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .item a:hover {
+        text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn-mark {
+        background: linear-gradient(45deg, #b22222, #ff4500);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 0.95em;
+        box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+
+    .btn-mark:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .btn-purchased {
+        background-color: #228B22; /* forest green */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 0.95em;
+        cursor: default;
+        box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    button:disabled {
+        cursor: not-allowed;
+    }
+
+    /* Snowflake Effect */
+    .snowflake {
+        position: fixed;
+        top: -10px;
+        color: #fff;
+        font-size: 1em;
+        z-index: 9999;
+        pointer-events: none;
+        user-select: none;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-10px); }
+        100% { transform: translateY(100vh); }
+    }
+</style>
 </head>
 <body>
-    <h1>🎁 Family Christmas Lists 🎁</h1>
-    <div id="lists">Loading...</div>
+<h1>🎁 Family Christmas Lists 🎁</h1>
+<p class="subtitle">Click the item link to see what to purchase, and mark it as "Purchased" when done!</p>
+<div id="lists">Loading...</div>
 
-    <script>
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSx8AyRPXBOoij8AoASxdVLcV3I5i_ctEQGmTJ5s2nznqL23OItItdF4uNuemjJoN6Z3fpwkmHuE-iM/pub?output=csv";
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxr8xCFVXu74YX0cNRCxMnVE38UC6omrxhYBtnJFvaUI4EBJn7Ra_JA0dX8u8x-cg9K/exec";
+<script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSx8AyRPXBOoij8AoASxdVLcV3I5i_ctEQGmTJ5s2nznqL23OItItdF4uNuemjJoN6Z3fpwkmHuE-iM/pub?output=csv";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxr8xCFVXu74YX0cNRCxMnVE38UC6omrxhYBtnJFvaUI4EBJn7Ra_JA0dX8u8x-cg9K/exec";
 
-        async function loadLists() {
-            const res = await fetch(SHEET_URL);
-            const text = await res.text();
-            const rows = text.trim().split("\n").map(r => r.split(","));
-            const header = rows.shift();
-            const lists = {};
+    async function loadLists() {
+        const res = await fetch(SHEET_URL);
+        const text = await res.text();
+        const rows = text.trim().split("\n").map(r => r.split(","));
+        const header = rows.shift();
+        const lists = {};
 
-            // Build lists object
-            rows.forEach(([person, item, link, purchased]) => {
-                if (!lists[person]) lists[person] = [];
-                const isPurchased = String(purchased).trim().toLowerCase() === "true";
-                const itemObj = { item, link, purchased: isPurchased };
-                lists[person].push(itemObj);
+        rows.forEach(([person, item, link, purchased]) => {
+            if (!lists[person]) lists[person] = [];
+            const isPurchased = String(purchased).trim().toLowerCase() === "true";
+            lists[person].push({ item, link, purchased: isPurchased });
+        });
+
+        const container = document.getElementById("lists");
+        container.innerHTML = "";
+
+        for (const [person, items] of Object.entries(lists)) {
+            const section = document.createElement("div");
+            section.classList.add("person");
+            section.innerHTML = `<h2>${person}</h2>`;
+
+            items.forEach(({ item, link, purchased }) => {
+                const div = document.createElement("div");
+                div.classList.add("item");
+                div.innerHTML = `
+                    <span><a href="${link}" target="_blank">${item}</a></span>
+                    <button class="${purchased ? 'btn-purchased' : 'btn-mark'}" ${purchased ? "disabled" : ""}>${purchased ? "Purchased" : "Mark Purchased"}</button>
+                `;
+                const button = div.querySelector("button");
+
+                if (!purchased) {
+                    button.addEventListener("click", async () => {
+                        button.disabled = true;
+                        button.textContent = "Purchased";
+                        button.classList.remove('btn-mark');
+                        button.classList.add('btn-purchased');
+                        await fetch(SCRIPT_URL, {
+                            method: "POST",
+                            body: JSON.stringify({ person, item }),
+                        });
+                    });
+                }
+
+                section.appendChild(div);
             });
 
-            const container = document.getElementById("lists");
-            container.innerHTML = "";
-
-            // Render lists
-            for (const [person, items] of Object.entries(lists)) {
-                const section = document.createElement("div");
-                section.classList.add("person");
-                section.innerHTML = `<h2>${person}</h2>`;
-
-                items.forEach(itemObj => {
-                    const { item, link, purchased } = itemObj;
-                    const div = document.createElement("div");
-                    div.classList.add("item");
-                    div.innerHTML = `
-                        <span><a href="${link}" target="_blank">${item}</a></span>
-                        <button ${purchased ? "disabled" : ""}>${purchased ? "Purchased" : "Mark Purchased"}</button>
-                    `;
-                    const button = div.querySelector("button");
-
-                    if (!purchased) {
-                        button.addEventListener("click", async () => {
-                            button.disabled = true;
-                            button.textContent = "Purchased";
-                            itemObj.purchased = true; // live update locally
-                            await fetch(SCRIPT_URL, {
-                                method: "POST",
-                                body: JSON.stringify({ person, item }),
-                            });
-                        });
-                    }
-
-                    section.appendChild(div);
-                });
-
-                container.appendChild(section);
-            }
+            container.appendChild(section);
         }
+    }
 
-        loadLists();
-    </script>
+    loadLists();
+</script>
 </body>
 </html>
