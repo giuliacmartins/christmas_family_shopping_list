@@ -1,191 +1,590 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>🎄 Family Christmas Lists 🎄</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+
+<title>Family Christmas Lists 🎄</title>
+
 <style>
-    /* Background & Fonts */
+* {
+    box-sizing: border-box;
+}
+
+/* Background & Fonts */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background:
+        radial-gradient(circle at top, #174b5b 0%, #103747 45%, #091d27 100%);
+    color: #f3eee5;
+    padding: 30px 20px;
+    max-width: 1000px;
+    min-height: 100vh;
+    margin: auto;
+}
+
+/* Main Header */
+header {
+    text-align: center;
+    margin: 30px 0 35px;
+}
+
+h1 {
+    font-family: "Monsieur La Doulaise", cursive;
+    font-weight: 400;
+    font-style: normal;
+
+    color: #f2e8d5;
+    font-size: 5.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #c5d3cf;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Person List Boxes */
+.person {
+    margin-bottom: 28px;
+    background: rgba(19, 38, 43, 0.92);
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid rgba(185, 157, 118, 0.4);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.person h2 {
+    color: #e8d8bb;
+    border-bottom: 1px solid #806b54;
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* Item Rows */
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item a {
+    color: #d7e5df;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.item a:hover {
+    color: #d7b68a;
+    text-decoration: underline;
+}
+
+/* Mark Purchased Button */
+.btn-mark {
+    background: linear-gradient(135deg, #9d3029, #74231f);
+    color: #fff;
+    border: 1px solid #bd6658;
+    border-radius: 7px;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: 0.25s;
+}
+
+.btn-mark:hover:not(:disabled) {
+    background: #b43c32;
+    transform: translateY(-2px);
+}
+
+/* Purchased Button */
+.btn-purchased {
+    background: #365c48;
+    color: #d6e5d9;
+    border: 1px solid #63836c;
+    border-radius: 7px;
+    padding: 9px 14px;
+    font-size: 0.85rem;
+    cursor: default;
+    white-space: nowrap;
+}
+
+/* Disabled Buttons */
+button:disabled {
+    cursor: not-allowed;
+}
+
+/* Snowflakes */
+.snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    font-size: 1em;
+    z-index: 9999;
+    pointer-events: none;
+    user-select: none;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(105vh);
+    }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    color: #aabdb8;
+    font-size: 0.85rem;
+    margin: 40px 0 15px;
+}
+
+/* Mobile Styling */
+@media (max-width: 600px) {
     body {
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(to bottom, #ccefff, #ffffff), url('https://images.unsplash.com/photo-1516542076529-1ea3854896f4?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-        background-size: cover;
-        color: #333;
-        padding: 20px;
-        max-width: 900px;
-        margin: auto;
+        padding: 20px 14px;
     }
 
-    /* Main Title */
     h1 {
-        text-align: center;
-        color: #b22222;
-        font-size: 2.5em;
-        text-shadow: 2px 2px 5px #fff;
+        font-size: 3.2rem;
     }
 
-    /* Subtitle Paragraph */
-    p.subtitle {
-        text-align: center;
-        font-size: 1.1em;
-        margin-top: -10px;
-        margin-bottom: 30px;
-        color: #006400;
-        font-weight: bold;
-    }
-
-    /* Person Section */
     .person {
-        margin-bottom: 2rem;
-        background: rgba(255,255,255,0.9);
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        border: 2px solid #b22222;
+        padding: 17px;
     }
 
-    /* Person Name Header */
-    .person h2 {
-        border-bottom: 3px solid #b22222;
-        padding-bottom: 8px;
-        color: #b22222;
-        font-size: 1.5em;
-    }
-
-    /* Item Rows */
     .item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #eee;
-        font-size: 1em;
+        gap: 10px;
     }
 
-    .item:last-child {
-        border-bottom: none;
-    }
-
-    .item a {
-        color: #006400;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .item a:hover {
-        text-decoration: underline;
-    }
-
-    /* Buttons */
-    .btn-mark {
-        background: linear-gradient(45deg, #b22222, #ff4500);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 6px 12px;
-        cursor: pointer;
-        font-size: 0.95em;
-        box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
-        transition: all 0.3s ease;
-    }
-
-    .btn-mark:hover:not(:disabled) {
-        transform: scale(1.05);
-    }
-
+    .btn-mark,
     .btn-purchased {
-        background-color: #228B22; /* forest green */
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 6px 12px;
-        font-size: 0.95em;
-        cursor: default;
-        box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+        padding: 8px 10px;
+        font-size: 0.78rem;
     }
-
-    button:disabled {
-        cursor: not-allowed;
-    }
-
-    /* Snowflake Effect */
-    .snowflake {
-        position: fixed;
-        top: -10px;
-        color: #fff;
-        font-size: 1em;
-        z-index: 9999;
-        pointer-events: none;
-        user-select: none;
-        animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-        0% { transform: translateY(-10px); }
-        100% { transform: translateY(100vh); }
-    }
+}
 </style>
 </head>
+
 <body>
-<h1>🎁 Family Christmas Lists 🎁</h1>
-<p class="subtitle">Click the item link to see what to purchase, and mark it as "Purchased" when done!</p>
-<div id="lists">Loading...</div>
+
+<header>
+    <h1>Family Christmas Lists</h1>
+
+    <p class="subtitle">
+        A little Christmas magic, one gift at a time.
+        <br>
+        Click an item to view it and mark it as purchased when done!
+    </p>
+</header>
+
+<div id="lists">Loading Christmas lists...</div>
+
+<footer>
+    ✨ Merry Christmas & Happy Holidays ✨
+</footer>
+
+<!-- Christmas Audio -->
+<audio
+    id="jingleBells"
+    src="./christmas-sound/jingle-bells.mp3"
+    preload="auto">
+</audio>
+
+<audio
+    id="santaHoHo"
+    src="./christmas-sound/santa.mp3"
+    preload="auto">
+</audio>
 
 <script>
-    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSx8AyRPXBOoij8AoASxdVLcV3I5i_ctEQGmTJ5s2nznqL23OItItdF4uNuemjJoN6Z3fpwkmHuE-iM/pub?output=csv";
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysx8Z23tRefHT_rzJ2qByVqark5DNPRxRnWEIhK6crLDcGOFK0gR_l85SKd7WxybtH/exec";
 
-    async function loadLists() {
-        const res = await fetch(SHEET_URL);
-        const text = await res.text();
-        const rows = text.trim().split("\n").map(r => r.split(","));
-        const header = rows.shift();
-        const lists = {};
+// ==========================================
+// GOOGLE SHEETS CONNECTION
+// ==========================================
 
-        rows.forEach(([person, item, link, purchased]) => {
-            if (!lists[person]) lists[person] = [];
-            const isPurchased = String(purchased).trim().toLowerCase() === "true";
-            lists[person].push({ item, link, purchased: isPurchased });
-        });
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSx8AyRPXBOoij8AoASxdVLcV3I5i_ctEQGmTJ5s2nznqL23OItItdF4uNuemjJoN6Z3fpwkmHuE-iM/pub?gid=0&single=true&output=csv";
 
-        const container = document.getElementById("lists");
-        container.innerHTML = "";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPJ2kiFrym907aY1WCeAGO8uwqkSTOg_EvJxB1xgm70WsYWHY9HMmDI1euwli9Scki/exec";
 
-        for (const [person, items] of Object.entries(lists)) {
-            const section = document.createElement("div");
-            section.classList.add("person");
-            section.innerHTML = `<h2>${person}</h2>`;
 
-            items.forEach(({ item, link, purchased }) => {
-                const div = document.createElement("div");
-                div.classList.add("item");
-                div.innerHTML = `
-                    <span><a href="${link}" target="_blank">${item}</a></span>
-                    <button class="${purchased ? 'btn-purchased' : 'btn-mark'}" ${purchased ? "disabled" : ""}>${purchased ? "Purchased" : "Mark Purchased"}</button>
-                `;
-                const button = div.querySelector("button");
+// ==========================================
+// CHRISTMAS AUDIO
+// ==========================================
 
-                if (!purchased) {
-                    button.addEventListener("click", async () => {
-                        button.disabled = true;
-                        button.textContent = "Purchased";
-                        button.classList.remove('btn-mark');
-                        button.classList.add('btn-purchased');
-                        await fetch(SCRIPT_URL, {
-                            method: "POST",
-                            body: JSON.stringify({ person, item }),
-                        });
-                    });
-                }
+const jingleBells = document.getElementById("jingleBells");
+const santaHoHo = document.getElementById("santaHoHo");
 
-                section.appendChild(div);
-            });
+jingleBells.volume = 0.35;
+santaHoHo.volume = 0.85;
 
-            container.appendChild(section);
+
+// Jingle Bells attempts to play when the page loads
+function startChristmasMusic() {
+
+    jingleBells.currentTime = 0;
+
+    jingleBells.play().catch(error => {
+
+        console.log(
+            "Browser blocked automatic music playback:",
+            error
+        );
+
+    });
+}
+
+
+// Santa sound when an item is purchased
+function playSanta() {
+
+    santaHoHo.currentTime = 0;
+
+    santaHoHo.play().catch(error => {
+
+        console.log(
+            "Santa audio could not play:",
+            error
+        );
+
+    });
+}
+
+
+// ==========================================
+// CSV PARSER
+// Supports commas inside quoted fields
+// ==========================================
+
+function parseCSV(csv) {
+
+    const rows = [];
+    let row = [];
+    let value = "";
+    let quoted = false;
+
+    for (let i = 0; i < csv.length; i++) {
+
+        const char = csv[i];
+
+        if (
+            char === '"' &&
+            csv[i + 1] === '"' &&
+            quoted
+        ) {
+
+            value += '"';
+            i++;
+
+        } else if (char === '"') {
+
+            quoted = !quoted;
+
+        } else if (char === "," && !quoted) {
+
+            row.push(value);
+            value = "";
+
+        } else if (
+            (char === "\n" || char === "\r") &&
+            !quoted
+        ) {
+
+            row.push(value);
+
+            if (row.some(cell => cell.trim() !== "")) {
+                rows.push(row);
+            }
+
+            row = [];
+            value = "";
+
+            if (
+                char === "\r" &&
+                csv[i + 1] === "\n"
+            ) {
+                i++;
+            }
+
+        } else {
+
+            value += char;
+
         }
     }
 
-    loadLists();
+    if (value.length || row.length) {
+
+        row.push(value);
+        rows.push(row);
+
+    }
+
+    return rows;
+}
+
+
+// ==========================================
+// LOAD CHRISTMAS LISTS
+// ==========================================
+
+async function loadLists() {
+
+    const container = document.getElementById("lists");
+
+    try {
+
+        const response = await fetch(SHEET_URL);
+
+        if (!response.ok) {
+            throw new Error("Could not load spreadsheet.");
+        }
+
+        const csv = await response.text();
+        const rows = parseCSV(csv);
+
+        // Remove spreadsheet headers
+        rows.shift();
+
+        const lists = {};
+
+        rows.forEach(([person, item, link, purchased]) => {
+
+            if (!person || !item) return;
+
+            person = person.trim();
+            item = item.trim();
+            link = (link || "").trim();
+
+            if (!lists[person]) {
+                lists[person] = [];
+            }
+
+            const isPurchased =
+                String(purchased).trim().toLowerCase() === "true";
+
+            lists[person].push({
+                item,
+                link,
+                purchased: isPurchased
+            });
+
+        });
+
+
+        container.innerHTML = "";
+
+        if (Object.keys(lists).length === 0) {
+
+            container.textContent =
+                "No Christmas lists found yet!";
+
+            return;
+        }
+
+
+        // Create each person's list
+        for (const [person, items] of Object.entries(lists)) {
+
+            const section = document.createElement("div");
+            section.className = "person";
+
+            const heading = document.createElement("h2");
+            heading.textContent = "🎁 " + person;
+
+            section.appendChild(heading);
+
+
+            items.forEach(({item, link, purchased}) => {
+
+                const div = document.createElement("div");
+                div.className = "item";
+
+                const itemName = document.createElement("span");
+
+
+                // Create item link if available
+                if (link && link !== "#") {
+
+                    const anchor = document.createElement("a");
+
+                    anchor.textContent = item;
+                    anchor.href = link;
+                    anchor.target = "_blank";
+                    anchor.rel = "noopener noreferrer";
+
+                    itemName.appendChild(anchor);
+
+                } else {
+
+                    itemName.textContent = item;
+
+                }
+
+
+                // Create purchased button
+                const button = document.createElement("button");
+
+                button.className = purchased
+                    ? "btn-purchased"
+                    : "btn-mark";
+
+                button.textContent = purchased
+                    ? "Purchased ✓"
+                    : "Mark Purchased";
+
+                button.disabled = purchased;
+
+
+                // Handle purchase
+                if (!purchased) {
+
+                    button.addEventListener("click", async () => {
+
+                        // Prevent multiple clicks
+                        button.disabled = true;
+
+                        button.textContent = "Purchased ✓";
+                        button.className = "btn-purchased";
+
+                        // Play Santa sound
+                        playSanta();
+
+
+                        // Send purchase update to Google Sheets
+                        try {
+
+                            await fetch(SCRIPT_URL, {
+
+                                method: "POST",
+
+                                mode: "no-cors",
+
+                                headers: {
+                                    "Content-Type": "text/plain;charset=utf-8"
+                                },
+
+                                body: JSON.stringify({
+                                    person: person,
+                                    item: item
+                                })
+
+                            });
+
+                        } catch (error) {
+
+                            console.error(
+                                "Unable to update Google Sheets:",
+                                error
+                            );
+
+                            // Restore button if request fails
+                            button.disabled = false;
+                            button.textContent = "Mark Purchased";
+                            button.className = "btn-mark";
+
+                        }
+
+                    });
+
+                }
+
+
+                div.appendChild(itemName);
+                div.appendChild(button);
+
+                section.appendChild(div);
+
+            });
+
+            container.appendChild(section);
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.textContent =
+            "Unable to load Christmas lists. Please try again later.";
+
+    }
+}
+
+
+// ==========================================
+// SNOWFLAKE GENERATOR
+// ==========================================
+
+function createSnowflake() {
+
+    const snowflake = document.createElement("div");
+
+    snowflake.className = "snowflake";
+    snowflake.textContent = "❄";
+
+    snowflake.style.left =
+        Math.random() * 100 + "vw";
+
+    snowflake.style.opacity =
+        Math.random();
+
+    snowflake.style.fontSize =
+        (Math.random() * 12 + 10) + "px";
+
+    const duration = Math.random() * 5 + 5;
+
+    snowflake.style.animationDuration =
+        duration + "s";
+
+    document.body.appendChild(snowflake);
+
+
+    setTimeout(() => {
+
+        snowflake.remove();
+
+    }, duration * 1000);
+
+}
+
+
+// Generate snowflakes
+setInterval(createSnowflake, 400);
+
+
+// ==========================================
+// START WEBSITE
+// ==========================================
+
+startChristmasMusic();
+loadLists();
+
 </script>
+
 </body>
 </html>
